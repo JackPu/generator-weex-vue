@@ -1,6 +1,6 @@
-# {{ name }}
+# <%=title%>
 
-> {{ description }}
+> <%=title%>
 
 ## getting start
 
