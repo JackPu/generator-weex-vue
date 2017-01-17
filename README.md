@@ -1,2 +1,6 @@
 # generator-weex-vue
-use yeoman to generate a weex project
+use [yeoman](http://yeoman.io/generators/) to generate a weex project
+
+
+
+
