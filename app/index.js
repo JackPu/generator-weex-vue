@@ -1,20 +1,32 @@
 /**
-
+* generate vue weex example
 **/
 var Generator = require('yeoman-generator');
-var fs = reuqire('fs');
+var fs = require('fs');
 
 module.exports = class extends Generator {
+  
   constructor(args,opts) {
-    super(args);
-    console.log(opts)
+    super(args,opts);
+    this.opts = opts;
+    console.log(opts);
+    console.log(this.destinationRoot())
+  }
+  
+  prompting() {
+    return this.prompt([{
+      type: 'input',
+      name: 'name',
+      message: 'Your weex project name',
+      default: this.appname
+    }]);
   }
   
   writing() {
-    
+    let self = this;
     function copyFiles(arr) {
       arr.forEach((item) => {
-        this.fs.copy(this.templatePath(item),this.destinationPath(item));
+        self.fs.copy(self.templatePath(item),self.destinationPath(item));
       })
     }
     
@@ -26,27 +38,32 @@ module.exports = class extends Generator {
       'build',
       'index.html',
       'src',
-      'weexpack.config.js',
+      'webpack.config.js',
       'weex.html'
     ]);
-    
-    this.fs.copyTpl(
-      this.templatePath('index.html'),
-      this.destinationPath('index.html')
-    );
-    this.fs.copyTpl(
-      this.templatePath('build'),
-      this.destinationPath('build')
-    );
+  
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { title: 'Templating with Yeoman' }
+      { projectName: this.appname }
     );
   }
   
   install() {
-    this.installDependencies();
+    this.installDependencies({
+      skipInstall: this.opts['skip-install'],
+      bower: false
+    });
+  }
+  
+  end() {
+    console.log('All is ready:');
+    console.log('$ npm run build : two js bundles for weex and web');
+    console.log('$ npm run dev : start a server and watch files');
+    console.log('$ npm run serve : start a web server on port 8080');
+    console.log('$ npm run debug : start weex-devtool for debugging with native');
+    
+    
   }
   
 };
