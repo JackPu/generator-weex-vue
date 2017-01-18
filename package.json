@@ -1,6 +1,6 @@
 {
   "name": "generator-weex-vue",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "use yoeman to generate a weex project(vue)",
   "main": "index.js",
   "scripts": {
